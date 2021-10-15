@@ -10,5 +10,7 @@ COPY ./package.json ./yarn.lock ./
 #Install dependencies
 RUN yarn install --quiet
 
+RUN npm install pm2 -g
+
 #Copy remaining files
 COPY ./ ./
