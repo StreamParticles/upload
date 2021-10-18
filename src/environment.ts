@@ -3,47 +3,18 @@ import Joi from "joi";
 import path from "path";
 
 const validator = Joi.object({
-  // AUTH SECURITY
-  JWT_PASSPHRASE: Joi.string().required(),
-
-  // DOCKER
-  IS_RUNNING_ON_DOCKER: Joi.boolean(),
-
-  // MONGODB
-  MONGODB_HOST: Joi.string().required(),
-  MONGODB_DBNAME: Joi.string().required(),
-  MONGODB_USER: Joi.string(),
-  MONGODB_PWD: Joi.string(),
-
-  // MONGODB ENCRYPTION
-  KEY: Joi.string().required(),
-  IV: Joi.string().required(),
-
-  // REDIS
-  REDIS_HOST: Joi.string().required(),
-  REDIS_PORT: Joi.string().required(),
-  REDIS_PWD: Joi.string().required(),
-
   // ENTRY_POINT
   API_PORT: Joi.number().required(),
-
-  // ELROND
-  ELROND_GATEWAY_URL: Joi.string().required(),
-  ELROND_API_URL: Joi.string().required(),
-  ELROND_HEROTAG_DOMAIN: Joi.string().required(),
-
-  // IFTTT
-  IFTTT_API: Joi.string().required(),
 
   // DEBUG
   ENABLE_CONSOLE_TRANSPORT: Joi.boolean(),
 
   // MEDIAS
-  MEDIAS_FOLDER: Joi.string(),
-});
+  MEDIAS_FOLDER: Joi.string().required(),
+}).unknown(true);
 
 const envFileName = () => {
-  return [".env.docker", process.env.NODE_ENV === "test" && "test"]
+  return [".env", process.env.NODE_ENV === "test" && "test"]
     .filter(Boolean)
     .join(".");
 };
@@ -71,7 +42,9 @@ const ENV: { [key: string]: string | boolean | number } = Object.entries(
   return { ...acc, [_key]: _value };
 }, {});
 
-validator.validate(ENV);
+const { error } = validator.validate(ENV);
+
+if (error) throw error;
 
 // Expose environment vars
 export { ENV };
