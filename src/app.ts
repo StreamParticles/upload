@@ -41,7 +41,7 @@ app.get("/hello", (req: Request, res: Response) => {
   res.send("Hello, world!");
 });
 
-app.post("/uploads/:mediaType", uploadMiddleware);
+app.post("/upload", uploadMiddleware);
 
 app.use(errorMiddleware);
 
