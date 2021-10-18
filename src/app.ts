@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import express, { Response, Request } from "express";
+import express, { Request, Response } from "express";
 
 require("express-async-errors");
 
@@ -10,9 +10,9 @@ import helmet from "helmet";
 //@ts-ignore
 import xss from "xss-clean";
 
-import { uploadMiddleware } from "./upload.middleware";
-import { requestLoggerMiddleware } from "./logger";
 import errorMiddleware from "./error.middleware";
+import { requestLoggerMiddleware } from "./logger";
+import { uploadMiddleware } from "./upload.middleware";
 
 const app = express();
 

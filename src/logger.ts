@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { isEmpty, omit } from "lodash";
-import { ENV } from "./environment";
 import { createLogger, format, transports } from "winston";
+
+import { ENV } from "./environment";
 
 const { combine, timestamp, printf, colorize, errors, metadata } = format;
 

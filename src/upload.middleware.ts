@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import multer from "multer";
-import path, { extname } from "path";
+import { nanoid } from "nanoid";
+import path from "path";
+
 import { ENV } from "./environment";
 import logger from "./logger";
 
@@ -12,7 +14,7 @@ const storage = multer.diskStorage({
     cb(null, path.resolve(__dirname, ENV.MEDIAS_FOLDER as string));
   },
   filename: function (req, file, cb) {
-    cb(null, [Date.now(), extname(file.originalname)].join("_"));
+    cb(null, [nanoid(50), file.originalname].join("_"));
   },
 });
 
